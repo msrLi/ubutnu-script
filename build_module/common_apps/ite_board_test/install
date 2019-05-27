@@ -1,0 +1,6 @@
+#!/bin/sh
+#This script used for copy file to target directory
+BUILD_DIR=$1
+THIS_NAME=$2
+
+cp -af ${BUILD_DIR}/${THIS_NAME}/exes/* ${PLATFORM_RELEASE_DIRECTORY}/rootfs/usr/bin/${THIS_NAME}

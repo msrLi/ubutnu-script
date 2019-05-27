@@ -1,0 +1,18 @@
+#!/bin/bash
+# 获取当前日期
+DATE_TIME=$(date '+%Y%m%d')
+#LOG_DIR=/home/dailybuilder/dailybuilder/dailybuild_log
+USER=dailybuilder
+
+export PATH=/home/dailybuilder/bin:/home/dailybuilder/bin/dailybuilder:$PATH
+LOG_DIR=/home/${USER}/dailybuild_log
+mkdir -p ${LOG_DIR}
+
+# 执行每日编译
+
+dailybuild.sh &> ${LOG_DIR}/dailybuild-${DATE_TIME}.log
+
+# 压缩日志后删除
+cd ${LOG_DIR}
+tar cjvf dailybuild-${DATE_TIME}.log.tar.bz2 dailybuild-${DATE_TIME}.log
+rm -rf ${LOG_DIR}/dailybuild-${DATE_TIME}.log

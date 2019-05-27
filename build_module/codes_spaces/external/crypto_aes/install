@@ -1,0 +1,28 @@
+#!/bin/sh
+#This script used for copy file to target directory
+BUILD_DIR=$1
+THIS_NAME=$2
+
+mkdir -p ${PLATFORM_RELEASE_DIRECTORY}/include
+mkdir -p ${PLATFORM_RELEASE_DIRECTORY}/lib
+mkdir -p ${PLATFORM_RELEASE_DIRECTORY}/test
+mkdir -p ${PLATFORM_RELEASE_DIRECTORY}/rootfs/usr/bin
+mkdir -p ${PLATFORM_RELEASE_DIRECTORY}/rootfs/usr/lib
+mkdir -p ${PLATFORM_RELEASE_DIRECTORY}/test_code
+cp -af include/* ${PLATFORM_RELEASE_DIRECTORY}/include
+cp -af test/test* ${PLATFORM_RELEASE_DIRECTORY}/test_code
+cp -af ${BUILD_DIR}/${THIS_NAME}/libs/* ${PLATFORM_RELEASE_DIRECTORY}/lib
+cp -af ${BUILD_DIR}/${THIS_NAME}/libs/lib* ${PLATFORM_RELEASE_DIRECTORY}/rootfs/usr/lib
+
+if [ ! "`ls -A ${BUILD_DIR}/${THIS_NAME}/tests/`" = "" ]; then
+    cp -af ${BUILD_DIR}/${THIS_NAME}/tests/* ${PLATFORM_RELEASE_DIRECTORY}/test
+fi
+
+if [ ! "`ls -A ${BUILD_DIR}/${THIS_NAME}/tests/`" = "" ]; then
+    cp -af ${BUILD_DIR}/${THIS_NAME}/tests/* ${PLATFORM_RELEASE_DIRECTORY}/rootfs/usr/bin
+fi
+
+if [ ! "`ls -A ${BUILD_DIR}/${THIS_NAME}/exes/`" = "" ]; then
+    cp -af ${BUILD_DIR}/${THIS_NAME}/exes/* ${PLATFORM_RELEASE_DIRECTORY}/rootfs/usr/bin/${THIS_NAME}
+    cp -af ${BUILD_DIR}/${THIS_NAME}/exes/* ${PLATFORM_RELEASE_DIRECTORY}/test/${THIS_NAME}
+fi

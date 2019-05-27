@@ -1,0 +1,30 @@
+#!/bin/bash
+
+#服务器网路接口名称
+USER=dailybuilder
+NETWORK_INTERFACE="enp7s0"
+
+#svn更新程序根路径 
+SVN_ROOT_PATH="/home/${USER}/svn_root"
+#编译工作路径 
+BUILD_ROOT_PATH="/home/${USER}/work"
+BUILD_PRODUCT_PATH="/home/${USER}/dailybuild_product"
+
+#平台编译列表（格式为 "路径+平台设备名称")
+TARGET_PLATFORM_LIST="platform/trunk 8168 TK1 TX1 385"							
+TARGET_PLATFORM_V2_LIST="platform_v2/trunk TX1 HI3519AV100 HI3519AV101 HI3559AV100"
+TARGET_PLATFORM_V2_APP_LIST="platform_v2_app/trunk HI3519AV100 HI3519AV101 HI3559AV100 TX1"
+#项目工程列表
+TARGET_PROJECT_LIST="platform_v2_app/branches project_gas  project_its  project_neuron  project_spy"
+
+#所有平台列表
+PLATFORM_LISTS="${TARGET_PLATFORM_V2_LIST}:${TARGET_PLATFORM_V2_APP_LIST}"
+PRIJECT_LISTS="${TARGET_PROJECT_LIST}"
+
+#收件人列表 
+MAIL_LISTS="rongle lihuibin"
+ 
+export NETWORK_INTERFACE SVN_ROOT_PATH BUILD_ROOT_PATH BUILD_PRODUCT_PATH
+export PLATFORM_LISTS TARGET_PLATFORM_LIST TARGET_PLATFORM_V2_LIST
+export PRIJECT_LISTS TARGET_PROJECT_LIST
+export MAIL_LISTS USER 

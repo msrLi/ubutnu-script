@@ -1,0 +1,7 @@
+PLATFORM_RELEASE_SVN_VERSION=$(shell cd ${PLATFORM_RELEASE_DIRECTORY}; LC_ALL=C svn info | grep "Last Changed Rev" | sed -e "s/Last Changed Rev: //g")
+PLATFORM_RELEASE_VERSION ?= 5.0.${PLATFORM_RELEASE_SVN_VERSION}
+
+export PLATFORM_RELEASE_VERSION
+
+unexport ROOT_DIR
+unexport TARGET

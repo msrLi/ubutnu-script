@@ -1,0 +1,62 @@
+PLATFORM_TOP_PATH = $(shell pwd)
+TARGET_CPU ?= HOST_X86
+
+# common variables
+PLATFORM_PATH = ${PLATFORM_TOP_PATH}/${TARGET_CPU_DIR}
+ITARGE_BUILD_OBJS_PATH = ${PLATFORM_TOP_PATH}/build
+PLATFORM_RELEASE_DIRECTORY = ${PLATFORM_PATH}/platform_release
+PLATFORM_SYSROOT_DIRECTORY = ${PLATFORM_RELEASE_DIRECTORY}/rootfs
+# get svn or git-svn version
+PLATFORM_RELEASE_SVN_VERSION=$(shell LC_ALL=C svn info | grep "Last Changed Rev" | sed -e "s/Last Changed Rev: //g")
+ifeq ( ,${PLATFORM_RELEASE_SVN_VERSION})
+    PLATFORM_RELEASE_SVN_VERSION=$(shell LC_ALL=C git svn info | grep "Last Changed Rev" | sed -e "s/Last Changed Rev: //g")
+endif
+
+
+# private variables for TX1 platform
+ifeq (${TARGET_CPU}, TX1)
+    TARGET_CPU_DIR = TX1
+    TOOLCHAIN_64BIT_PATH = ${PLATFORM_RELEASE_DIRECTORY}/toolchain/gcc-linaro-4.9.4-2017.01-x86_64_aarch64-linux-gnu
+    TOOLCHAIN_32BIT_PATH = ${PLATFORM_RELEASE_DIRECTORY}/toolchain/gcc-linaro-4.9.4-2017.01-x86_64_arm-linux-gnueabihf
+    COMPILE_64BIT_PREFIX = ${TOOLCHAIN_64BIT_PATH}/bin/aarch64-linux-gnu-
+    TOOLCHAIN_PATH = ${TOOLCHAIN_64BIT_PATH}
+    COMPILE_PREFIX = aarch64-linux-gnu-
+    PORTING_COMPILE_PREFIX = aarch64-linux-gnu
+    PORTING_INSTALL_DIR=${TOOLCHAIN_PATH}/aarch64-linux-gnu
+    CROSS32CC = ${TOOLCHAIN_32BIT_PATH}/bin/arm-linux-gnueabihf-gcc
+    ARCH = arm64
+    export CROSS32CC
+    ITE_MACHINE_ID = 1000
+endif
+
+# private variables for HI3559AV100 platform
+ifeq (${TARGET_CPU}, HI3559AV100)
+    TARGET_CPU_DIR = HI3559AV100
+    TOOLCHAIN_PATH = ${PLATFORM_RELEASE_DIRECTORY}/toolchain/aarch64-himix100-linux
+    COMPILE_PREFIX = aarch64-himix100-linux-
+    PORTING_COMPILE_PREFIX = aarch64-himix100-linux
+    PORTING_INSTALL_DIR=${TOOLCHAIN_PATH}/aarch64-linux-gnu
+    ITE_OPENCV_ENABLE = 1
+    ARCH = arm64
+    ITE_MACHINE_ID = 1301
+endif
+
+# private variables for HOST platform
+ifeq (${TARGET_CPU}, HOST_X86)
+    TARGET_CPU_DIR = HOST_X86
+    TOOLCHAIN_PATH = ${PLATFORM_RELEASE_DIRECTORY}/toolchain
+    COMPILE_PREFIX =
+    PORTING_COMPILE_PREFIX =
+    PORTING_INSTALL_DIR=${PLATFORM_RELEASE_DIRECTORY}/toolchain
+    ARCH =
+endif
+
+export GCC_COLORS='error=01;31:warning=01;33:note=01;36:caret=01;32:locus=01:quote=01'
+export ARCH TARGET_CPU TOOLCHAIN_64BIT_PATH COMPILE_64BIT_PREFIX TOOLCHAIN_PATH COMPILE_PREFIX
+export PORTING_COMPILE_PREFIX PORTING_INSTALL_DIR
+export TARGET_CPU_DIR PLATFORM_TOP_PATH PLATFORM_PATH PLATFORM_RELEASE_DIRECTORY PLATFORM_SYSROOT_DIRECTORY ITARGE_BUILD_OBJS_PATH
+export PATH := ${TOOLCHAIN_PATH}/bin:${PATH}
+export PKG_CONFIG_LIBDIR := ${PORTING_INSTALL_DIR}/lib
+export PKG_CONFIG_PATH := ${PORTING_INSTALL_DIR}/lib/pkgconfig:${PKG_CONFIG_PATH}
+export PLATFORM_RELEASE_SVN_VERSION
+export ITE_OPENCV_ENABLE ITE_MACHINE_ID
