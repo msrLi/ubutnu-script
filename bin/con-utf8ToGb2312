@@ -1,0 +1,19 @@
+#!/bin/bash
+if [ $# -ne 1 ]
+then
+    cat << EOF
+Usage:        $0 filename
+example:      ./$0 main.c
+EOF
+    exit
+fi
+if [  -f $1 ]
+then 
+    mv $1 $1.orig
+    iconv -f utf8 -t gb2312 -c $1.orig > $1
+else 
+    echo " has no $1 files"
+    exit
+fi
+
+

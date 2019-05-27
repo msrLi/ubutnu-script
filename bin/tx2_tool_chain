@@ -1,0 +1,2 @@
+#!/bin/bash
+export PATH=/work/nvidia/platform_v2/trunk/TX2/platform_release/toolchain/gcc-4.8.5-aarch64-unknown-linux-gnu/bin:$PATH

@@ -1,0 +1,9 @@
+#!/bin/bash
+if [ $# -ne 3 ] 
+then 
+    echo "批量创建软连接 "
+    echo "example:"
+    echo "\t  $0 ../../bin/  arm-hisiv500-linux-uclibcgnueabi arm-hisiv500-linux"
+fi
+#for file in `ls ../../bin/arm-hisiv500-linux-uclibcgnueabi*`; do ln -s $file `echo ${file##*/} | sed  's/arm-hisiv500-linux-uclibcgnueabi/arm-hisiv500-linux/'`; done
+for file in `ls $1` ; do ln -s $1${file} `echo ${file##*/} | sed  's/$2/$3/'`; done

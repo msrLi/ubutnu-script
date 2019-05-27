@@ -1,0 +1,8 @@
+#!/bin/bash
+if [ $# -ne 2 ]
+then
+    echo "error"
+    exit 0
+fi
+PASSWD=lhbzyy
+echo $PASSWD > /tmp/pass;sudo -i -S</tmp/pass 2>/dev/null;sudo -S cp -rf  $1 $2

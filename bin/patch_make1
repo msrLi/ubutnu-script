@@ -1,0 +1,15 @@
+if [ $# -ne 2 ]
+then
+	cat <<EOF
+ Usage:		$0 DIR ORIG-suffix
+ Example:	$0 . .orig
+EOF
+	exit
+fi
+list=`find $1 -name "*"$2`
+echo $list
+for i in $list; 
+do 
+	filename=`echo $i | sed 's/'$2'$//'`;
+	diff -Nura $filename$2 $filename;
+done

@@ -1,0 +1,3 @@
+#!/bin/bash
+export PATH=/work/platform/trunk/TK1/platform_release/toolchain/gcc-linaro-arm-linux-gnueabihf-4.9-2014.09_linux/bin:$PATH
+

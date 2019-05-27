@@ -1,0 +1,8 @@
+if [ $# -ne 1 ]
+then 
+	cat << EOF
+	find name : $0 .git
+EOF
+	exit
+fi
+find . -name "$1" | xargs rm -Rf 

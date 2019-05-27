@@ -1,0 +1,16 @@
+#!/bin/bash
+if [ $# -ne 2 ]; then
+        cat <<EOF
+ Usage:         $0 interrupt_char  second
+ Example:       $0 host_syncpt  10
+EOF
+        exit
+fi
+
+beging_counter=`cat /proc/interrupts | grep $1 | awk '{print $2}'`
+sleep $2
+end_counter=`cat /proc/interrupts | grep $1 | awk '{print $2}'`
+total_interrupt=`expr $end_counter - $beging_counter`
+average_interrupt=`expr $total_interrupt / $2`
+echo $1 average interupt equal $average_interrupt
+

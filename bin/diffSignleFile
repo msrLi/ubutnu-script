@@ -1,0 +1,10 @@
+#!/bin/bash
+if [ $# -ne 2 ]
+then
+    cat EOF
+usage:      $0 fileold filenew
+Example:    $0 mian.c main.c.back
+EOF
+fi
+
+diff -Nua $1 $2 > diffSignleFile.patch

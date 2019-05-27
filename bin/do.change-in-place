@@ -1,0 +1,35 @@
+#!/bin/bash
+if [ $# -ne 2 ]
+then
+        cat <<EOF
+ Usage:         $0 old new
+ Example:       $0 synop c2
+ Usage:         $0 -f  change_list
+ Example:       $0 -f  /tmp/list
+EOF
+        exit
+fi
+
+#Find all files
+list=`find -type f`
+echo $list
+#Check if get parameters from list file
+if [ "$1"x = "-f"x ]; then
+    cat $2 | while read line
+    do
+        echo $line >/tmp/change
+        old=`awk '{print $1}' /tmp/change`
+        new=`awk '{print $2}' /tmp/change`
+        for file in $list; 
+        do 
+	        sed --in-place -e 's;'$old';'$new';g' $file;
+        done
+    done
+else
+    for i in $list; 
+    do 
+	    sed --in-place -e 's;'$1';'$2';g' $i;
+    done
+fi
+
+rm -rf /tmp/change

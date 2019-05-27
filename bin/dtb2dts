@@ -1,0 +1,14 @@
+#!/bin/bash
+if [ $# -ne 2 ]; then
+        cat <<EOF
+ Usage:         $0 dtb_file dts_file
+ Example:       $0 1.dtb 1.dts
+EOF
+        exit
+fi
+
+#Find all files
+DTB_FILE=$1
+DTS_FILE=$2
+
+dtc -I dtb -O dts -o ${DTS_FILE} ${DTB_FILE}

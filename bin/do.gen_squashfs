@@ -1,0 +1,15 @@
+#!/bin/bash
+if [ $# -ne 2 ]; then
+	cat <<EOF
+	Usage:		 $0 rootfs_dir version
+	Example:	 $0 rootfs 1.0.1
+EOF
+		exit
+fi
+
+ROOTFS_DIR=$1
+ROOTFS_VERSION=$2
+
+sudo rm -rf ${ROOTFS_DIR}.sqfs ${ROOTFS_DIR}.itarge
+sudo mksquashfs ${ROOTFS_DIR} ${ROOTFS_DIR}.sqfs -comp xz
+mkimage -A arm -O linux -T ramdisk -C gzip -a 0x0 -e 0x0 -n "${ROOTFS_VERSION}" -d ${ROOTFS_DIR}.sqfs ${ROOTFS_DIR}.itarge

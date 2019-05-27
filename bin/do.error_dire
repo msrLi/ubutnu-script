@@ -1,0 +1,3 @@
+#!/bin/sh
+echo "make -j 30 > ~/build.log 2>&1"
+

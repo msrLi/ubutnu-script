@@ -1,0 +1,185 @@
+#!/bin/bash
+source /home/kepler/.bashrc
+export PATH=/home/kepler/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:$PATH
+export USER=kepler
+
+#获取当前日期
+YESTERDAY=`date --date='1 days ago' +"%Y-%m-%d"`
+TODAY=`date +"%Y-%m-%d"`
+#编译平台版本
+#ip地址
+LOCAL_IP=`ifconfig eth0 | grep "inet addr" | cut -d: -f 2 | cut -d " " -f 1`
+cd /home/kepler/work/platform/trunk
+svn up --force >/home/kepler/work/platform/trunk/ti8168/platform_release/build.log
+PLATFORM_SVN_VERSION=`LC_ALL=C svn info | grep Revision | sed -e "s/Revision: //g"`
+make clean
+make &>>/home/kepler/work/platform/trunk/ti8168/platform_release/build.log
+
+#检查平台编译是否存在问题
+build_errors=`grep Error /home/kepler/work/platform/trunk/ti8168/platform_release/build.log | grep ignored -v | wc -l | awk '{print $1}'`
+if [ $build_errors -ne 0 ]; then
+	editor_list=`svn log -r {$YESTERDAY}:{$TODAY} | grep "^r" | awk '{print $3}' | sort | uniq` 
+	echo "Subject: Platform Daily Build $YESTERDAY Failed" >/tmp/mail.txt
+	echo "From: Daily_Builder@itarge.com" >>/tmp/mail.txt
+	echo "To: rongle@itarge.com" >>/tmp/mail.txt
+	for editor in $editor_list
+	do
+		echo "To: $editor@itarge.com" >>/tmp/mail.txt
+	done
+	echo "--------This is an auto mail send by Daily_Builder from ${LOCAL_IP}---------" >>/tmp/mail.txt
+	echo "" >>/tmp/mail.txt
+	cat /home/kepler/work/platform/trunk/ti8168/platform_release/build.log >>/tmp/mail.txt
+	sendmail -vt </tmp/mail.txt
+fi
+
+#替换最新的平台目录，/home/kepler/work/project_kepler_se/trunk/platform_release直接链接到
+#/home/kepler/work/platform/trunk/ti8168/platform_release/
+
+#编译trunk
+rm -rf /home/kepler/kepler2.0_images/*
+#获取相关版本号
+cd /home/kepler/work/project_kepler_se/trunk
+svn up --force
+SVN_VERSION=`LC_ALL=C svn info | grep Revision | sed -e "s/Revision: //g"`
+DIR_NAME=trunk_images_svn${PLATFORM_SVN_VERSION}_${SVN_VERSION}
+
+make clean
+svn diff >build.log
+find applications -name "build" -exec rm -rf {} \;
+make &>>build.log
+
+#检查trunk编译是否存在问题
+build_errors=`grep Error build.log | grep ignored -v | wc -l | awk '{print $1}'`
+if [ $build_errors -ne 0 ]; then
+	editor_list=`svn log -r {$YESTERDAY}:{$TODAY} | grep "^r" | awk '{print $3}' | sort | uniq` 
+	echo "Subject: trunk Daily Build $YESTERDAY Failed" >/tmp/mail.txt
+	echo "From: Daily_Builder@itarge.com" >>/tmp/mail.txt
+	echo "To: rongle@itarge.com" >>/tmp/mail.txt
+	for editor in $editor_list
+	do
+		echo "To: $editor@itarge.com" >>/tmp/mail.txt
+	done
+	echo "--------This is an auto mail send by Daily_Builder from ${LOCAL_IP}---------" >>/tmp/mail.txt
+	echo "" >>/tmp/mail.txt
+	cat build.log >>/tmp/mail.txt
+	sendmail -vt </tmp/mail.txt
+fi
+
+# 如果没有重复编译，就copy
+if [ ! -d /home/kepler/daily_build/trunk/${DIR_NAME} ]; then
+	mkdir -p /home/kepler/daily_build/trunk/${DIR_NAME}
+	cp -af /home/kepler/kepler2.0_images/* /home/kepler/daily_build/trunk/${DIR_NAME}/
+	cp -af build.log /home/kepler/daily_build/trunk/${DIR_NAME}/
+fi
+
+# Build epolice_V2.0 branch
+rm -rf /home/kepler/kepler2.0_images/*
+#获取相关版本号
+cd /home/kepler/work/project_kepler_se/branches/epolice_V2.0
+svn up --force
+SVN_VERSION=`LC_ALL=C svn info | grep Revision | sed -e "s/Revision: //g"`
+DIR_NAME=epolice_V2.0_images_svn${PLATFORM_SVN_VERSION}_${SVN_VERSION}
+
+make clean
+svn diff >build.log
+find applications -name "build" -exec rm -rf {} \;
+make &>>build.log
+
+#检查epolice_V2.0编译是否存在问题
+build_errors=`grep Error build.log | grep ignored -v | wc -l | awk '{print $1}'`
+if [ $build_errors -ne 0 ]; then
+	editor_list=`svn log -r {$YESTERDAY}:{$TODAY} | grep "^r" | awk '{print $3}' | sort | uniq` 
+	echo "Subject: epolice_V2.0 Daily Build $YESTERDAY Failed" >/tmp/mail.txt
+	echo "From: Daily_Builder@itarge.com" >>/tmp/mail.txt
+	echo "To: rongle@itarge.com" >>/tmp/mail.txt
+	for editor in $editor_list
+	do
+		echo "To: $editor@itarge.com" >>/tmp/mail.txt
+	done
+	echo "--------This is an auto mail send by Daily_Builder from ${LOCAL_IP}---------" >>/tmp/mail.txt
+	echo "" >>/tmp/mail.txt
+	cat build.log >>/tmp/mail.txt
+	sendmail -vt </tmp/mail.txt
+fi
+
+# 如果没有重复编译，就copy
+if [ ! -d /home/kepler/daily_build/epolice_V2.0/${DIR_NAME} ]; then
+	mkdir -p /home/kepler/daily_build/epolice_V2.0/${DIR_NAME}
+	cp -af /home/kepler/kepler2.0_images/* /home/kepler/daily_build/epolice_V2.0/${DIR_NAME}/
+	cp -af build.log /home/kepler/daily_build/epolice_V2.0/${DIR_NAME}/
+fi
+
+
+# Build eCheckpoint branch
+rm -rf /home/kepler/kepler2.0_images/*
+#获取相关版本号
+cd /home/kepler/work/project_kepler_se/branches/eCheckpoint
+svn up --force
+SVN_VERSION=`LC_ALL=C svn info | grep Revision | sed -e "s/Revision: //g"`
+DIR_NAME=eCheckpoint_images_svn${PLATFORM_SVN_VERSION}_${SVN_VERSION}
+
+make clean
+svn diff >build.log
+find applications -name "build" -exec rm -rf {} \;
+make &>>build.log
+
+#检查eCheckpoint编译是否存在问题
+build_errors=`grep Error build.log | grep ignored -v | wc -l | awk '{print $1}'`
+if [ $build_errors -ne 0 ]; then
+	editor_list=`svn log -r {$YESTERDAY}:{$TODAY} | grep "^r" | awk '{print $3}' | sort | uniq` 
+	echo "Subject: eCheckpoint Daily Build $YESTERDAY Failed" >/tmp/mail.txt
+	echo "From: Daily_Builder@itarge.com" >>/tmp/mail.txt
+	echo "To: rongle@itarge.com" >>/tmp/mail.txt
+	for editor in $editor_list
+	do
+		echo "To: $editor@itarge.com" >>/tmp/mail.txt
+	done
+	echo "--------This is an auto mail send by Daily_Builder from ${LOCAL_IP}---------" >>/tmp/mail.txt
+	echo "" >>/tmp/mail.txt
+	cat build.log >>/tmp/mail.txt
+	sendmail -vt </tmp/mail.txt
+fi
+
+# 如果没有重复编译，就copy
+if [ ! -d /home/kepler/daily_build/eCheckpoint/${DIR_NAME} ]; then
+	mkdir -p /home/kepler/daily_build/eCheckpoint/${DIR_NAME}
+	cp -af /home/kepler/kepler2.0_images/* /home/kepler/daily_build/eCheckpoint/${DIR_NAME}/
+	cp -af build.log /home/kepler/daily_build/eCheckpoint/${DIR_NAME}/
+fi
+
+# Build binocular_vision branch
+rm -rf /home/kepler/kepler2.0_images/*
+#获取相关版本号
+cd /home/kepler/work/project_kepler_se/branches/binocular_vision
+svn up --force
+SVN_VERSION=`LC_ALL=C svn info | grep Revision | sed -e "s/Revision: //g"`
+DIR_NAME=binocular_vision_images_svn${PLATFORM_SVN_VERSION}_${SVN_VERSION}
+
+make clean
+svn diff >build.log
+find applications -name "build" -exec rm -rf {} \;
+make &>>build.log
+
+#检查binocular_vision编译是否存在问题
+build_errors=`grep Error build.log | grep ignored -v | wc -l | awk '{print $1}'`
+if [ $build_errors -ne 0 ]; then
+	editor_list=`svn log -r {$YESTERDAY}:{$TODAY} | grep "^r" | awk '{print $3}' | sort | uniq` 
+	echo "Subject: binocular_vision Daily Build $YESTERDAY Failed" >/tmp/mail.txt
+	echo "From: Daily_Builder@itarge.com" >>/tmp/mail.txt
+	echo "To: rongle@itarge.com" >>/tmp/mail.txt
+	for editor in $editor_list
+	do
+		echo "To: $editor@itarge.com" >>/tmp/mail.txt
+	done
+	echo "--------This is an auto mail send by Daily_Builder from ${LOCAL_IP}---------" >>/tmp/mail.txt
+	echo "" >>/tmp/mail.txt
+	cat build.log >>/tmp/mail.txt
+	sendmail -vt </tmp/mail.txt
+fi
+
+# 如果没有重复编译，就copy
+if [ ! -d /home/kepler/daily_build/binocular_vision/${DIR_NAME} ]; then
+	mkdir -p /home/kepler/daily_build/binocular_vision/${DIR_NAME}
+	cp -af /home/kepler/kepler2.0_images/* /home/kepler/daily_build/binocular_vision/${DIR_NAME}/
+	cp -af build.log /home/kepler/daily_build/binocular_vision/${DIR_NAME}/
+fi
