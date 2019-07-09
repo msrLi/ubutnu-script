@@ -95,6 +95,10 @@ echo "source ~/vim_runtime/my_configs.vim" >>  ~/.vimrc
 echo "catch" >>  ~/.vimrc
 echo "endtry" >>  ~/.vimrc
 
+#repo 下载 
+curl https://storage.googleapis.com/git-repo-downloads/repo > /opt/bin/repo
+chmod +x /opt/bin/repo
+
 #安装ffmepeg
 #ffmepeg -i 20.avi %08d.jpg 可以将视频文件逐帧的方式输出jpg文件
 sudo apt-get install libavformat57 ffmpeg libavformat-dev libavcodec57 libswscale-dev
