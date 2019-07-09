@@ -87,47 +87,14 @@ sudo apt-get -y install tofrodos
 sudo apt-get -y install patch xutils-dev
 #sudo apt-get -y install docky
 
-# 安装vsftpd
-sudo apt-get -y install vsftpd
-sudo sed -in-place -e 's/#write_enable=YES/write_enable=YES/' /etc/vsftpd.conf 
-# 安装tftpd
-sudo apt-get -y install tftpd tftp xinetd
-#sudo apt-get -y install tftp-hpa tftpd-hpa openbsd-inetd
-#sudo /etc/init.d/tftpd-hpa restart
-# 安装Samba
-sudo apt-get -y install samba
-sudo apt-get -y install smbfs
-
-# 安装zlib
-sudo apt-get -y install libacl1-dev zlib1g-dev liblzo2-dev
-sudo apt-get -y install xz-utils uuid-dev
-
 # 安装libiconv
 sudo apt-get -y install rpm
-
-# 安装mksquashfs
-sudo apt-get -y install squashfs-tools 
 
 # 安装cramfs tool
 sudo apt-get -y install cramfsprogs
 
-# 安装netperf
-sudo apt-get -y install netperf iperf
-
 # 安装openGL库
 sudo apt-get -y install mesa-common-dev mesademos libgl1-mesa-dev libglu1-mesa-dev freeglut3-dev
-
-# 安装vim编辑器
-sudo apt-get -y install vim exuberant-ctags cscope global 
-
-# 安装版本管理软件
-sudo apt-get -y install cvs tree
-sudo apt-get -y install subversion subversion-tools
-tar zxvf /work/tools/git-1.8.3.1.tar.gz
-cd git-1.8.3.1
-make prefix=/usr/local all; sudo make prefix=/usr/local install
-cd -
-rm -rf git-1.8.3.1
 
 # 安装TK1需要的工具
 sudo apt-get -y install libudev-dev
@@ -146,71 +113,7 @@ sudo make install PREFIX=/usr/local
 cd -
 rm -rf dtc-1.4.1
 
-# 安装压缩库
-# zlib不能更新，否则UI启动不起来
-#tar jxvf /work/tools/zlib-1.2.5.tar.bz2
-#cd zlib-1.2.5
-#./configure
-#make
-#sudo make install
-#cd -
-#rm -rf zlib-1.2.5
 
-#tar jxvf /work/tools/lzma-4.32.7.tar.bz2
-#cd lzma-4.32.7
-#./configure
-#make
-#sudo make install
-#cd -
-#rm -rf lzma-4.32.7
-
-#tar jxvf /work/tools/xz-5.2.1.tar.bz2
-cd xz-5.2.1
-./configure
-make
-sudo make install
-cd -
-rm -rf xz-5.2.1
-
-# 安装sqashfs工具
-tar jxvf /work/tools/squashfs-4.3.tar.bz2
-cd squashfs-4.3/squashfs-tools/
-sed --in-place -e 's;#XZ_SUPPORT = 1;XZ_SUPPORT = 1;g' Makefile
-make
-sudo make install
-cd -
-rm -rf squashfs-4.3
-
-# 安装mtd工具
-tar jxvf /work/tools/mtd-utils-1.5.1.tar.bz2
-cd mtd-utils-1.5.1
-make V=1
-sudo make install
-# 因为没有安装头文件，所以直接脚本安装
-sudo mv /usr/include/mtd /usr/include/mtd_old
-sudo cp -a include/mtd /usr/include
-cd -
-rm -rf mtd-utils-1.5.1
-
-# 安装minicom
-sudo apt-get -y install minicom
-
-# 安装cmake
-sudo apt-get -y install cmake cmake-curses-gui
-
-# 安装opssl
-sudo apt-get -y install openssl libssl-dev
-
-# 恢复习惯性配置
-cd Utilities
-./do.ins
-cd -
 
 # 禁止updatedb.mlocate以防止硬盘过度读取
 sudo killall updatedb.mlocate
-sudo chmod -x /etc/cron.daily/mlocate
-
-#安装 ffmpeg  
-#ffmpeg -i 20.avi %08d.jpg 可以将视频文件以逐帧的方式输出jpg文件
-sudo apt-get -y install ffmpeg libavformat53 libavformat-dev libavcodec53 libswscale-dev
-
