@@ -6,11 +6,12 @@ sudo apt-get -y install apt-file
 sudo apt-file update
 # 安装系统必要库 
 sudo apt-get -y install pkg-config bison fakeroot flex mtdev-tools mtd-utils  build-essential curl expat tk libcurl4-openssl-dev 
+sudo apt-get -y python-dev libfreetype6-dev libfreetype6 
 # 添加网络
 sudo apt install net-tools
 
 #编译开发
-sudo apt-get -y install gcc g++
+sudo apt-get -y install gcc g++ 
 sudo apt-get -y install mtd-utils
 #安装zlib
 sudo apt-get -y install zlib1g-dev zlibc
@@ -27,7 +28,7 @@ sudo apt-get install vim
 sudo apt-get install autoconf
 sudo apt-get install git
 sudo apt-get insatll htop
-sudo apt-get install automake
+sudo apt-get install automake autopoint libtool gettext
 sudo apt-get install tree
 sudo apt-get install unrar
 sudo apt-get install make 
