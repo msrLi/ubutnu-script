@@ -58,6 +58,8 @@ git config --global color.branch auto
 git config --global color.interactive auto
 git config --global user.name "lihuibin" 
 git config --global user.email "lihuibin705@163.com"
+# https 方式下保存密码
+git config --global credential.helper store
 
 # 安装vim编辑器
 sudo apt-get -y install vim exuberant-ctags cscope global
