@@ -63,8 +63,10 @@ git config --global credential.helper store
 # git config --global gpg.program gpg
 # git config --global commit.gpgsign true
 # git config --global user.signingkey [KEYID] 
-# KEYID get  
+# KEYID get 
+# gpg --full-generate-key
 # gpg --list-secret-keys --keyid-format LONG
+# gpg --armor --export 3AA5C34371567BD2
 # 安装vim编辑器
 sudo apt-get -y install vim exuberant-ctags cscope global
 
