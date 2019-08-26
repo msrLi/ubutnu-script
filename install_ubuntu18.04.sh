@@ -19,7 +19,7 @@ sudo apt-get -y install zlib1g-dev zlibc
 sudo apt-get -y install lzma
 # xz 
 sudo apt-get -y install zx-utils liblzo2-dev libacl1-dev uuid-dev
-
+sudo apt-get -y install libfreetype6-dev
 # mksquashfs 
 sudo apt-get -y install squashfs-tools
 
