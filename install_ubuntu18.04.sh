@@ -1,6 +1,9 @@
 #!/bin/bash
 
 
+# 设置显示短路径
+sed -in-place -e "s/\\w/\\W/" ~/.bashrc 
+
 # 解决依赖神器 
 sudo apt-get -y install apt-file
 sudo apt-file update
