@@ -12,7 +12,8 @@ sudo apt-get -y install pkg-config bison fakeroot flex mtdev-tools mtd-utils  bu
 sudo apt-get -y python-dev libfreetype6-dev libfreetype6 
 # 添加网络
 sudo apt install net-tools
-
+# android
+sudo apt-get -y install git-core gnupg flex bison gperf build-essential zip curl zlib1g-dev gcc-multilib g++-multilib libc6-dev-i386 lib32ncurses5-dev x11proto-core-dev libx11-dev lib32z-dev libgl1-mesa-dev libxml2-utils xsltproc unzip
 #编译开发
 sudo apt-get -y install gcc g++ 
 sudo apt-get -y install mtd-utils
