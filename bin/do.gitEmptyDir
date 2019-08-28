@@ -1,2 +1,4 @@
 #!/bin/bash
-find . -type d -empty -exec touch {}/.gitignore \;
+
+# find . -type d -empty -exec touch {}/.gitignore \;
+find . -type d -empty -exec touch {}/.empty \;
