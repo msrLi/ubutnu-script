@@ -106,6 +106,13 @@ echo "source ~/vim_runtime/my_configs.vim" >>  ~/.vimrc
 echo "catch" >>  ~/.vimrc
 echo "endtry" >>  ~/.vimrc
 
+# bash aline 
+cp -ar ./my_bash_aliases /opt/bin
+
+echo "if [ -f /opt/bin/my_bash_aliases ]; then" >> ~/.bashrc
+echo "  . /opt/bin/my_bash_aliases" >> ~/.bashrc
+echo "fi" >> ~/.bashrc
+
 #repo 下载 
 curl https://storage.googleapis.com/git-repo-downloads/repo > /opt/bin/repo
 chmod +x /opt/bin/repo
