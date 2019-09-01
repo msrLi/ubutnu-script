@@ -1,0 +1,5 @@
+Name:		user
+Company:	test
+Serial Number:	06-70-001636
+License Key:	ACQB95 TVE4ZT SR11CF DTS3KW ABBSPG B2ABYZ DQRBVX 652FXB
+Issue Date:	06-25-2018

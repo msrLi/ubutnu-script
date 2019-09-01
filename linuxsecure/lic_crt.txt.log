@@ -1,0 +1,3 @@
+﻿2019-09-01 15:36:16,info,Starting import from /home/binson/下载/bin/linuxsecure/lic_crt.txt to /home/binson/.vandyke/SecureCRT/Config
+2019-09-01 15:36:16,err,Error parsing XML file "/home/binson/下载/bin/linuxsecure/lic_crt.txt": expected <
+2019-09-01 15:36:16,info,Import from /home/binson/下载/bin/linuxsecure/lic_crt.txt to /home/binson/.vandyke/SecureCRT/Config complete

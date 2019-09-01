@@ -1,0 +1,13 @@
+1, install scrt-sfx-8.3.3-1646.ubuntu17-64.x86_64.deb
+sudo dpkg -i scrt-sfx-8.3.3-1646.ubuntu17-64.x86_64.deb
+
+2, exec crack-secure.sh
+sudo ./crack-secure.sh
+
+3, exec SecureCRT, and input info (lic_crt.txt)
+SecureCRT
+
+4, exec SecureFX, and input info (lic_fx.txt)
+SecureFX
+
+over~

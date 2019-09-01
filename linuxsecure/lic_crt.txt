@@ -1,0 +1,5 @@
+Name:		user
+Company:	test
+Serial Number:	03-80-236971
+License Key:	ABMPCE 2ZYN7J PW9Q1D TJDTG7 ACCPBZ AWYKSQ MPVW27 9W2KWD
+Issue Date:	06-25-2018
